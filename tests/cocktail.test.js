@@ -42,55 +42,55 @@ beforeAll(async () => {
 });
 
 describe('Content tests', () => {
-  test('Markdown file created', async () => {
+  test('[10] Markdown file created', async () => {
     expect(lines.length).toBeGreaterThan(0);
   });
 
-  test('Content starts with # Cocktail Recipes', async () => {
+  test('[1] Content starts with # Cocktail Recipes', async () => {
     expect(lines[0]).toBe('# Cocktail Recipes');
   });
 
-  test('Content includes drink name as ## Margarita', async () => {
+  test('[1] Content includes drink name as ## Margarita', async () => {
     expect(lines).toContain('## Margarita');
   });
 
-  test('Content includes medium drink image', async () => {
+  test('[1] Content includes medium drink image', async () => {
     expect(lines).toContain(
       '![Margarita](https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg/medium)'
     );
   });
 
-  test('Content includes category and alcoholic info', async () => {
+  test('[1] Content includes category and alcoholic info', async () => {
     expect(lines).toContain('**Category**: Ordinary Drink');
     expect(lines).toContain('**Alcoholic**: Yes');
   });
 
-  test('Content includes header ### Ingredients', async () => {
+  test('[1] Content includes header ### Ingredients', async () => {
     expect(lines).toContain('### Ingredients');
   });
 
-  test('Content includes ingredients list', async () => {
+  test('[1] Content includes ingredients list', async () => {
     expect(lines).toContain('- 1 1/2 oz Tequila');
     expect(lines).toContain('- 1/2 oz Triple sec');
     expect(lines).toContain('- 1 oz Lime juice');
     expect(lines).toContain('- Salt');
   });
 
-  test('Content includes header ### Instructions', async () => {
+  test('[1] Content includes header ### Instructions', async () => {
     expect(lines).toContain('### Instructions');
   });
 
-  test('Content includes instruction details', async () => {
+  test('[1] Content includes instruction details', async () => {
     expect(lines).toContain('Rub the rim of the glass.');
   });
 
-  test('Content includes glass type', async () => {
+  test('[1] Content includes glass type', async () => {
     expect(lines).toContain('Serve in: Cocktail glass');
   });
 });
 
 describe('Error handling', () => {
-  test('Calls console.error() if no cocktail name argument provided', async () => {
+  test('[1] Calls console.error() if no cocktail name argument provided', async () => {
     const originalArgv = process.argv;
     process.argv = ['node', 'main.js']; // No cocktail name
 
@@ -108,7 +108,7 @@ describe('Error handling', () => {
     consoleErrorMock.mockRestore();
   });
 
-  test('Calls console.error() if cocktail not found', async () => {
+  test('[1] Calls console.error() if cocktail not found', async () => {
     const originalArgv = process.argv;
     process.argv = ['node', 'main.js', 'nonexistentcocktail']; // Example cocktail name
 
@@ -137,7 +137,7 @@ describe('Error handling', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  test('Calls console.error() if fetch was not OK', async () => {
+  test('[1] Calls console.error() if fetch was not OK', async () => {
     const originalArgv = process.argv;
     process.argv = ['node', 'main.js', 'margarita']; // Example cocktail name
 

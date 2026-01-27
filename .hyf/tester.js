@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
-import { startVitest } from 'vitest/node';
 import path from 'path';
+import { startVitest } from 'vitest/node';
 
 const __dirname = import.meta.dirname;
 const reportPath = path.join(__dirname, 'report.json');
@@ -24,31 +24,38 @@ await fs.unlink(reportFileName);
 
 try {
   const { testResults } = JSON.parse(reportContent);
-  let testCount = 0;
-  let passedCount = 0;
+  let maxPoints = 0;
+  let earnedPoints = 0;
+
+  console.log('\nVitest unit test results:\n');
+
+  const passingScore = Number(process.env.PASSING_SCORE || 50);
 
   for (const result of testResults) {
     for (const assertionResult of result.assertionResults) {
       const { title, status } = assertionResult;
+      const match = title.match(/^\[(\d+)]/);
+      const points = match ? Number(match[1]) || 1 : 1;
+      maxPoints += points;
       let icon;
       if (status == 'passed') {
         icon = '✅';
-        passedCount++;
+        earnedPoints += points;
       } else {
         icon = '❌';
       }
       console.log(`${icon} ${title}`);
-      testCount++;
     }
   }
 
-  const PASSING_SCORE = 50;
-  const totalScore = (passedCount / testCount) * 100;
+  console.log(`\nScore: ${earnedPoints} of ${maxPoints}`);
+
+  const totalScore = (earnedPoints / maxPoints) * 100;
 
   const results = {
     score: totalScore,
-    pass: totalScore >= PASSING_SCORE,
-    passingScore: PASSING_SCORE,
+    pass: totalScore >= passingScore,
+    passingScore: passingScore,
   };
 
   await fs.writeFile('score.json', JSON.stringify(results, null, 2));
