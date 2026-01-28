@@ -4,10 +4,10 @@ import path from 'path';
 const __dirname = import.meta.dirname;
 const reportPath = path.join(__dirname, 'report.json');
 
-const reportContent = await fs.readFile(reportPath, 'utf-8');
-await fs.unlink(reportPath);
-
 try {
+  const reportContent = await fs.readFile(reportPath, 'utf-8');
+  await fs.unlink(reportPath);
+
   const { testResults } = JSON.parse(reportContent);
   let maxPoints = 0;
   let earnedPoints = 0;
