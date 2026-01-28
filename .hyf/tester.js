@@ -39,7 +39,7 @@ try {
   console.log(`\nTotal passed: ${passedCount}`);
   console.log(`Total failed: ${failedCount}`);
 
-  const totalScore = (earnedPoints / maxPoints) * 100;
+  const totalScore = Math.round((earnedPoints / maxPoints) * 100);
 
   const results = {
     score: totalScore,
